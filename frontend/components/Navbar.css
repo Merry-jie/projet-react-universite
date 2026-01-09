@@ -1,0 +1,11 @@
+.navbar {
+  background: #5f7cff;
+  padding: 15px;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}

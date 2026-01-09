@@ -1,0 +1,21 @@
+.etudiants {
+  padding: 20px;
+}
+
+.form input {
+  margin: 5px;
+}
+
+.student-card {
+  background: white;
+  padding: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.danger {
+  background: crimson;
+  color: white;
+}

@@ -1,0 +1,13 @@
+.note-card {
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.note-card.filled {
+  background: #e6f0ff;
+}
+
+.expand {
+  margin-top: 10px;
+}

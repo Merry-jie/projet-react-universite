@@ -1,0 +1,211 @@
+/* Sidebar droite (Menu icônes) */
+.sidebar-right {
+  background: #34495e;
+  width: 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 25px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  border-left: 2px solid #2c3e50;
+  margin-left: 5px;
+}
+
+.university-icon {
+  height: 70px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.university-icon p {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #9b59b6, #3498db);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.separator-small {
+  width: 40px;
+  border: 1px solid #4a607d;
+  margin-bottom: 25px;
+}
+
+.icon-menu {
+  text-align: center;
+  padding: 15px 0;
+  width: 100%;
+  transition: all 0.3s ease;
+  color: #bdc3c7;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-menu:hover {
+  color: #3498db;
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.icon-menu.active-menu {
+  color: #9b59b6;
+  background-color: rgba(155, 89, 182, 0.1);
+  border-left: 3px solid #9b59b6;
+}
+
+.icon-menu i {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.icon-menu span {
+  font-size: 11px;
+  display: block;
+  white-space: nowrap;
+}
+
+.user-icon {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9b59b6, #3498db);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.user-icon:hover {
+  transform: scale(1.1);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .sidebar-right {
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    margin-left: 0;
+    border-left: none;
+    border-top: 2px solid #2c3e50;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 15px 0;
+  }
+  
+  .university-icon {
+    display: none;
+  }
+  
+  .separator-small:first-of-type {
+    display: none;
+  }
+  
+  .icon-menu {
+    flex: 1;
+    padding: 10px 5px;
+    flex-direction: column;
+    min-width: 70px;
+  }
+  
+  .icon-menu i {
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+  
+  .icon-menu span {
+    font-size: 10px;
+  }
+  
+  .user-icon {
+    display: none;
+  }
+  
+  .separator-small:last-of-type {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-right {
+    padding: 10px 0;
+  }
+  
+  .icon-menu {
+    padding: 8px 3px;
+    min-width: 60px;
+  }
+  
+  .icon-menu i {
+    font-size: 14px;
+  }
+  
+  .icon-menu span {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-right {
+    flex-wrap: wrap;
+    padding: 8px 0;
+  }
+  
+  .icon-menu {
+    min-width: 55px;
+    padding: 6px 2px;
+  }
+  
+  .icon-menu i {
+    font-size: 13px;
+  }
+  
+  .icon-menu span {
+    font-size: 8px;
+  }
+}
+
+/* Pour les très petits écrans */
+@media (max-width: 360px) {
+  .icon-menu {
+    min-width: 50px;
+  }
+  
+  .icon-menu span {
+    font-size: 7px;
+  }
+/* ============ CACHER SUR MOBILE QUAND LE MENU EST OUVERT ============ */
+@media (max-width: 1200px) {
+  .sidebar-right {
+    display: flex; /* Normalement visible sur tablette */
+  }
+  
+  /* Cacher quand le menu mobile est ouvert */
+  .sidebar-container.mobile-open .sidebar-right {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-right {
+    display: none; /* Cacher complètement sur petit mobile */
+  }
+}
+}

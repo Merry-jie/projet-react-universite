@@ -1,0 +1,498 @@
+/* Page PDF spécifique */
+
+/* Filtre par filière */
+.filiere-filter {
+  margin-bottom: 20px;
+}
+
+.filiere-filter label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.filiere-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filiere-select:focus {
+  outline: none;
+  border-color: #9b59b6;
+}
+
+.select-all-filiere {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Liste des étudiants pour PDF */
+.students-list-pdf {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.student-item-pdf {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.student-item-pdf:hover {
+  background-color: #f8f9fa;
+}
+
+.student-item-pdf:last-child {
+  border-bottom: none;
+}
+
+.student-checkbox-pdf {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.student-checkbox-pdf input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.student-info-pdf {
+  flex: 1;
+}
+
+.student-name-pdf {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.student-details-pdf {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.student-filiere-pdf,
+.student-niveau-pdf {
+  background: #ecf0f1;
+  padding: 3px 10px;
+  border-radius: 12px;
+  color: #7f8c8d;
+}
+
+.student-filiere-pdf {
+  background: #3498db;
+  color: white;
+}
+
+.no-data-pdf {
+  text-align: center;
+  padding: 40px 20px;
+  color: #7f8c8d;
+}
+
+.no-data-pdf i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+  color: #bdc3c7;
+}
+
+/* Résumé de sélection */
+.selection-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.summary-item:last-child {
+  margin-bottom: 0;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.summary-value {
+  font-weight: bold;
+  color: #9b59b6;
+  background: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Aperçu du relevé */
+.report-preview-container {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.grade-report-preview {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+}
+
+.report-header-preview {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+.report-header-preview h3 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.report-header-preview h4 {
+  color: #9b59b6;
+  font-size: 20px;
+  margin: 15px 0 5px;
+}
+
+.report-header-preview p {
+  color: #7f8c8d;
+  margin: 5px 0;
+}
+
+/* Tableau d'aperçu */
+.report-table-preview {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.report-table-preview th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  padding: 15px;
+  text-align: left;
+  border-bottom: 2px solid #9b59b6;
+  font-weight: 600;
+}
+
+.report-table-preview td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.report-footer-preview {
+  text-align: right;
+  padding: 20px 0;
+}
+
+.average-container {
+  display: inline-block;
+  background: #f8f9fa;
+  padding: 15px 25px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.average-label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-right: 10px;
+}
+
+.average-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9b59b6;
+}
+
+.appreciation {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.05);
+}
+
+.no-grades-message {
+  text-align: center;
+  padding: 40px;
+  color: #7f8c8d;
+}
+
+.no-grades-message i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+  color: #bdc3c7;
+}
+
+/* Actions du rapport */
+.report-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.report-actions .btn {
+  min-width: 200px;
+  flex: 1;
+}
+
+/* État vide */
+.empty-report {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-report-icon {
+  font-size: 80px;
+  color: #bdc3c7;
+  margin-bottom: 30px;
+}
+
+.empty-report h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.empty-report p {
+  color: #7f8c8d;
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+.empty-report-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  min-width: 180px;
+  text-align: center;
+}
+
+.stat-card i {
+  font-size: 36px;
+  color: #9b59b6;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.stat-number {
+  display: block;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Overlay de génération PDF */
+.pdf-generating-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-generating-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.pdf-generating-content h3 {
+  color: #2c3e50;
+  margin: 20px 0 10px;
+}
+
+.pdf-generating-content p {
+  color: #7f8c8d;
+  margin-bottom: 30px;
+}
+
+.generating-progress {
+  margin-top: 30px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #ecf0f1;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #9b59b6, #3498db);
+  border-radius: 4px;
+  width: 60%;
+  animation: progressAnimation 2s ease-in-out infinite alternate;
+}
+
+@keyframes progressAnimation {
+  0% { width: 30%; }
+  100% { width: 70%; }
+}
+
+.generating-progress span {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .students-section,
+  .main-section {
+    width: 100%;
+    max-height: none;
+  }
+  
+  .students-list-pdf {
+    max-height: 300px;
+  }
+  
+  .report-preview-container {
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-actions {
+    flex-direction: column;
+  }
+  
+  .report-actions .btn {
+    width: 100%;
+  }
+  
+  .average-container,
+  .appreciation {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .empty-report-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-checkbox-pdf {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .student-details-pdf {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .report-header-preview h3 {
+    font-size: 20px;
+  }
+  
+  .report-header-preview h4 {
+    font-size: 18px;
+  }
+  
+  .report-table-preview th,
+  .report-table-preview td {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .average-value {
+    font-size: 20px;
+  }
+  
+  .appreciation {
+    font-size: 16px;
+  }
+#pdf .page-container {
+  flex: 1;
+  display: flex;
+}
+
+#pdf .students-section,
+#pdf .main-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#pdf .students-list-pdf {
+  flex: 1;
+  overflow-y: auto;
+}
+
+#pdf .report-preview-container {
+  flex: 1;
+  overflow-y: auto;
+}
+}

@@ -1,0 +1,56 @@
+import { useState } from "react";
+import "./App.css";
+
+import Navbar from "./components/Navbar.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+
+import Accueil from "./pages/Accueil.jsx";
+import Etudiants from "./pages/Etudiants.jsx";
+import Notes from "./pages/Notes.jsx";
+import Pdf from "./pages/PDF.jsx";
+
+export default function App() {
+  const [pageActive, setPageActive] = useState("accueil");
+  const [contactOpen, setContactOpen] = useState(false);
+
+  const renderPage = () => {
+    switch (pageActive) {
+      case "etudiants":
+        return <Etudiants />;
+      case "notes":
+        return <Notes />;
+      case "pdf":
+        return <Pdf />;
+      default:
+        return <Accueil />;
+    }
+  };
+
+  return (
+    <div className="app">
+      <Navbar
+        onAccueil={() => setPageActive("accueil")}
+        onContact={() => setContactOpen(true)}
+      />
+
+      <div className="layout">
+        <Sidebar onSelect={setPageActive} />
+
+        <main className={contactOpen ? "content blur" : "content"}>
+          {renderPage()}
+        </main>
+      </div>
+
+      {contactOpen && (
+        <div className="contact-overlay">
+          <div className="contact-box">
+            <h2>Contact</h2>
+            <p>Email : contact@universite.edu</p>
+            <p>Téléphone : +261 XX XXX XX</p>
+            <button onClick={() => setContactOpen(false)}>Quitter</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

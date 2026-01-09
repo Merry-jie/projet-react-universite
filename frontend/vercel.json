@@ -1,0 +1,28 @@
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://backend-universite.onrender.com/api/$1"
+    },
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "https://backend-universite.onrender.com/socket.io/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "https://backend-universite.onrender.com/api"
+  }
+}

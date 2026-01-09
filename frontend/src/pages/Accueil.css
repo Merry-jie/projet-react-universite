@@ -1,0 +1,235 @@
+/* Page Accueil - Tableau de bord */
+
+#accueil.content-page {
+  width: 100% !important;
+  min-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.welcome-section {
+  text-align: center;
+  padding: 20px 0 40px;
+  margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.welcome-section p {
+  color: #7f8c8d;
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #9b59b6;
+}
+
+.dashboard-card.stats-card {
+  cursor: default;
+}
+
+.dashboard-card.stats-card:hover {
+  transform: none;
+  border-color: transparent;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.card-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #9b59b6, #3498db);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon i {
+  font-size: 24px;
+  color: white;
+}
+
+.card-header h3 {
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-description {
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.card-stat {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #7f8c8d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-icon {
+  font-size: 36px;
+  color: #9b59b6;
+  margin-bottom: 5px;
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: #9b59b6;
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover .card-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-action i {
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover .card-action i {
+  transform: translateX(5px);
+}
+
+/* Barre de progression */
+.progress-container {
+  margin-top: 20px;
+  background: #ecf0f1;
+  border-radius: 10px;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  border-radius: 10px;
+  position: relative;
+  transition: width 1s ease;
+}
+
+.progress-bar span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .welcome-section h2 {
+    font-size: 24px;
+  }
+  
+  .welcome-section p {
+    font-size: 16px;
+  }
+  
+  .dashboard-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #accueil.content-page {
+    padding: 0 10px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .stat-value {
+    font-size: 32px;
+  }
+#accueil .dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#accueil .dashboard-grid {
+  flex: 1;
+  display: grid;
+  align-content: start;
+}
+
+#accueil .welcome-message {
+  margin-top: auto;
+}
+}
