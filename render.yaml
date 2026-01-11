@@ -5,15 +5,16 @@ services:
     rootDir: backend
     buildCommand: npm install
     startCommand: node server.js
+    plan: free
     envVars:
       - key: NODE_ENV
         value: production
     healthCheckPath: /api/health
     autoDeploy: true
 
-  - type: static
+  - type: web
     name: projet-react-frontend
-    env: static
+    plan: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
@@ -24,3 +25,4 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
+    autoDeploy: true
