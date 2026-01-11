@@ -1,8 +1,25 @@
 import axios from 'axios';
 
+// URL de base - CORRIGÉ POUR RENDER
+const getBaseURL = () => {
+  // Production (Render)
+  if (window.location.hostname.includes('onrender.com')) {
+    return 'https://projet-react-api.onrender.com/api';
+  }
+  
+  // Développement local
+  if (window.location.hostname === 'localhost' || 
+      window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api';
+  }
+  
+  // Fallback
+  return 'https://projet-react-api.onrender.com/api';
+};
+
 // Configuration de base d'Axios
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
+  baseURL: getBaseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -73,7 +90,7 @@ export const studentService = {
   delete: (id) => api.delete(`/students/${id}`),
   
   // Rechercher des étudiants
-  search: (query) => api.get('/students/search', { params: { q: query } }),
+  search: (query) => api.get(`/students/search?q=${query}`),
 };
 
 // Services pour les notes
@@ -121,9 +138,9 @@ export const pdfService = {
   generateForStudent: (studentId) => api.get(`/pdf/student/${studentId}`, {
     responseType: 'blob',
   }),
-  
+
   // Générer un PDF pour plusieurs étudiants
-  generateForMultiple: (studentIds) => api.post('/pdf/multiple', { studentIds }, {
+  generateForMultiple: (studentIds) => api.post('/pdf/multiple', studentIds, {
     responseType: 'blob',
   }),
   

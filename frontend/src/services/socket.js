@@ -9,24 +9,21 @@ class SocketService {
     this.maxReconnectAttempts = 10;
   }
 
-  // URL déterminée automatiquement
+  // URL déterminée automatiquement - CORRIGÉ POUR RENDER
   getSocketURL() {
-    // En production, utilise l'URL de l'API depuis les variables d'environnement
-    if (import.meta.env.VITE_API_URL) {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      // Convertit http://backend.com/api en http://backend.com
-      return apiUrl.replace('/api', '');
+    // EN PRODUCTION (Render) - URL fixe
+    if (window.location.hostname.includes('onrender.com')) {
+      return 'https://projet-react-api.onrender.com';
     }
     
-    // En développement, détection automatique
+    // EN DÉVELOPPEMENT LOCAL
     if (window.location.hostname === 'localhost' || 
         window.location.hostname === '127.0.0.1') {
-      return 'http://localhost:5001';
+      return 'http://localhost:5000';
     }
     
-    // Sinon, utiliser la même IP que la page
-    return window.location.protocol + '//' + 
-           window.location.hostname + ':5000';
+    // FALLBACK : utiliser l'URL de l'API
+    return 'https://projet-react-api.onrender.com';
   }
 
   // Connexion au serveur
@@ -66,11 +63,11 @@ class SocketService {
     this.socket.on('disconnect', (reason) => {
       console.log('🔌 Socket.io déconnecté:', reason);
       this.isConnected = false;
-      window.dispatchEvent(new CustomEvent('socket:disconnected', { detail: reason }));
+      window.dispatchEvent(new CustomEvent('socket:disconnected'));
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('❌ Erreur de connexion Socket.io:', error.message);
+      console.error('❌ Erreur de connexion Socket.io:', error);
       this.reconnectAttempts++;
       if (this.reconnectAttempts >= this.maxReconnectAttempts) {
         console.warn('Nombre maximum de tentatives atteint');
@@ -91,21 +88,21 @@ class SocketService {
 
     // Événements applicatifs
     this.socket.on('welcome', (data) => {
-      console.log('👋 Message de bienvenue:', data.message);
+      console.log('👋 Message de bienvenue:', data);
     });
 
     this.socket.on('data:init', (data) => {
-      console.log('📦 Données initiales reçues');
+      console.log('📦 Données initiales reçues:', data);
       window.dispatchEvent(new CustomEvent('socket:data:init', { detail: data }));
     });
 
     this.socket.on('user:joined', (data) => {
-      console.log('👤 Nouvel utilisateur connecté:', data.id);
+      console.log('👤 Nouvel utilisateur connecté:', data);
       window.dispatchEvent(new CustomEvent('socket:user:joined', { detail: data }));
     });
 
     this.socket.on('user:left', (data) => {
-      console.log('👤 Utilisateur déconnecté:', data.id);
+      console.log('👤 Utilisateur déconnecté:', data);
       window.dispatchEvent(new CustomEvent('socket:user:left', { detail: data }));
     });
 
@@ -134,7 +131,7 @@ class SocketService {
       this.socket.emit(event, data);
       console.log(`📤 Émis: ${event}`, data);
     } else {
-      console.warn(`⚠️ Impossible d'émettre ${event}: socket non connecté`);
+      console.warn(`⚠ Impossible d'émettre ${event}: socket non connecté`);
       // Stocker pour émission ultérieure
       setTimeout(() => {
         if (this.isConnected) {
