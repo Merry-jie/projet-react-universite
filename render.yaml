@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: projet-react-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        generateValue: true
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+  - type: web
+    name: projet-react-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: ./dist
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://projet-react-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

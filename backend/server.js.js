@@ -4,14 +4,10 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-// Configuration POUR RENDER
+// Configuration
 const isProduction = process.env.NODE_ENV === 'production';
-const PORT = process.env.PORT || 10000;
-
-// MODIFICATION POUR RENDER :
-const CLIENT_URL = process.env.RENDER_EXTERNAL_URL 
-  ? process.env.RENDER_EXTERNAL_URL.replace('-api', '-frontend').replace('onrender.com', 'onrender.com')
-  : 'http://localhost:5174';
+const PORT = process.env.PORT || 5000;
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5174';
 
 const app = express();
 
@@ -19,29 +15,16 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        // MODIFICATION POUR RENDER :
-        origin: [
-            "https://projet-react-frontend.onrender.com",
-            "http://localhost:5174",
-            "https://projet-react-frontend.onrender.com:3000",
-            "http://localhost:3000"
-        ],
+        origin: isProduction ? CLIENT_URL : "*",
         methods: ["GET", "POST"],
         credentials: true
     },
-    transports: ['websocket', 'polling'],
-    // Important pour Render
-    pingTimeout: 60000,
-    pingInterval: 25000
+    transports: ['websocket', 'polling']
 });
 
 // Middleware
 app.use(cors({
-    // MODIFICATION POUR RENDER :
-    origin: [
-        "https://projet-react-frontend.onrender.com",
-        "http://localhost:5174"
-    ],
+    origin: isProduction ? CLIENT_URL : "*",
     credentials: true
 }));
 app.use(express.json());
@@ -72,7 +55,7 @@ let grades = [
 
 io.on('connection', (socket) => {
     console.log('🔌 Nouveau client connecté:', socket.id);
-
+    
     // Envoyer un message de bienvenue
     socket.emit('welcome', {
         message: 'Bienvenue sur le serveur en temps réel',
@@ -80,16 +63,16 @@ io.on('connection', (socket) => {
         timestamp: new Date().toISOString(),
         clients: io.engine.clientsCount
     });
-
+    
     // Envoyer les données initiales
     socket.emit('data:init', { students, grades });
-
+    
     // Informer les autres de la nouvelle connexion
     socket.broadcast.emit('user:joined', {
         id: socket.id,
         timestamp: new Date().toISOString()
     });
-
+    
     // ========== ÉVÉNEMENTS ÉTUDIANTS ==========
     socket.on('student:create', (studentData) => {
         const newStudent = {
@@ -98,12 +81,12 @@ io.on('connection', (socket) => {
             dateadded: new Date().toISOString()
         };
         students.push(newStudent);
-
+        
         // Diffuser à tous les clients
         io.emit('student:created', newStudent);
         console.log('📝 Nouvel étudiant créé:', newStudent.id);
     });
-
+    
     socket.on('student:update', (updatedStudent) => {
         const index = students.findIndex(s => s.id === updatedStudent.id);
         if (index !== -1) {
@@ -112,13 +95,13 @@ io.on('connection', (socket) => {
             console.log('📝 Étudiant mis à jour:', updatedStudent.id);
         }
     });
-
+    
     socket.on('student:delete', (studentId) => {
         students = students.filter(s => s.id !== studentId);
         io.emit('student:deleted', studentId);
         console.log('📝 Étudiant supprimé:', studentId);
     });
-
+    
     // ========== ÉVÉNEMENTS NOTES ==========
     socket.on('grade:create', (gradeData) => {
         const newGrade = {
@@ -129,7 +112,7 @@ io.on('connection', (socket) => {
         io.emit('grade:created', newGrade);
         console.log('📊 Nouvelle note créée:', newGrade.id);
     });
-
+    
     socket.on('grade:update', (updatedGrade) => {
         const index = grades.findIndex(g => g.id === updatedGrade.id);
         if (index !== -1) {
@@ -138,23 +121,23 @@ io.on('connection', (socket) => {
             console.log('📊 Note mise à jour:', updatedGrade.id);
         }
     });
-
+    
     socket.on('grade:delete', (gradeId) => {
         grades = grades.filter(g => g.id !== gradeId);
         io.emit('grade:deleted', gradeId);
         console.log('📊 Note supprimée:', gradeId);
     });
-
+    
     // ========== ÉVÉNEMENTS SYSTÈME ==========
     socket.on('ping', () => {
         socket.emit('pong', { timestamp: new Date().toISOString() });
     });
-
+    
     socket.on('disconnect', (reason) => {
         console.log('🔌 Client déconnecté:', socket.id, '- Raison:', reason);
         io.emit('user:left', { id: socket.id, reason });
     });
-
+    
     socket.on('error', (error) => {
         console.error('❌ Erreur Socket.io:', error);
     });
@@ -188,10 +171,10 @@ app.post('/api/students', (req, res) => {
         dateadded: new Date().toISOString()
     };
     students.push(newStudent);
-
+    
     // Notifier via Socket.io
     io.emit('student:created', newStudent);
-
+    
     res.json(newStudent);
 });
 
@@ -250,10 +233,10 @@ app.delete('/api/grades/:id', (req, res) => {
 
 // Statistiques
 app.get('/api/stats/dashboard', (req, res) => {
-    const average = grades.length > 0
+    const average = grades.length > 0 
         ? (grades.reduce((sum, g) => sum + g.grade, 0) / grades.length).toFixed(2)
         : 0;
-
+    
     res.json({
         students: students.length,
         grades: grades.length,
@@ -271,10 +254,10 @@ app.post('/api/notifications', (req, res) => {
         ...req.body,
         timestamp: new Date().toISOString()
     };
-
+    
     // Diffuser via Socket.io
     io.emit('notification', notification);
-
+    
     res.json({ success: true, notification });
 });
 
@@ -282,22 +265,35 @@ app.post('/api/notifications', (req, res) => {
 // DÉMARRAGE DU SERVEUR
 // ================================
 
-// Pour Render
-httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log('=========================================');
-    console.log(`🚀  SERVEUR BACKEND DÉMARRÉ SUR RENDER`);
-    console.log('=========================================');
-    console.log(`📡  Port: ${PORT}`);
-    console.log(`🔌  WebSocket: wss://projet-react-api.onrender.com`);
-    console.log(`🌐  Client URL: ${CLIENT_URL}`);
-    console.log(`🌍  External URL: ${process.env.RENDER_EXTERNAL_URL || 'localhost'}`);
-    console.log('');
-    console.log('📊  Données initiales:');
-    console.log(`   - ${students.length} étudiants`);
-    console.log(`   - ${grades.length} notes`);
-    console.log('');
-    console.log('=========================================');
-});
+// Pour Vercel, exportez l'app
+if (process.env.VERCEL) {
+    // Vercel gère le serveur automatiquement
+    module.exports = app;
+} else {
+    // En développement local, démarrez le serveur
+    httpServer.listen(PORT, '0.0.0.0', () => {
+        console.log('=========================================');
+        console.log(`🚀  SERVEUR BACKEND (${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'})`);
+        console.log('=========================================');
+        console.log(`📡  API REST:    http://localhost:${PORT}`);
+        console.log(`🔌  WebSocket:   ws://localhost:${PORT}`);
+        
+        if (isProduction) {
+            console.log(`🌐  Mode: Production`);
+            console.log(`🔗  Client URL: ${CLIENT_URL}`);
+        } else {
+            console.log(`💻  Mode: Développement`);
+            console.log(`🔗  Frontend local: http://localhost:5174`);
+        }
+        
+        console.log('');
+        console.log('📊  Données initiales:');
+        console.log(`   - ${students.length} étudiants`);
+        console.log(`   - ${grades.length} notes`);
+        console.log('');
+        console.log('=========================================');
+    });
+}
 
 // Gestion des erreurs globales
 process.on('uncaughtException', (error) => {

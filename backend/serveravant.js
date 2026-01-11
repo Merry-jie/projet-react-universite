@@ -4,13 +4,12 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-// Configuration POUR RENDER
+// Configuration POUR GLITCH
 const isProduction = process.env.NODE_ENV === 'production';
-const PORT = process.env.PORT || 10000;
-
-// MODIFICATION POUR RENDER :
-const CLIENT_URL = process.env.RENDER_EXTERNAL_URL 
-  ? process.env.RENDER_EXTERNAL_URL.replace('-api', '-frontend').replace('onrender.com', 'onrender.com')
+const PORT = process.env.PORT || 5000;
+// MODIFICATION POUR GLITCH :
+const CLIENT_URL = process.env.PROJECT_DOMAIN 
+  ? `https://${process.env.PROJECT_DOMAIN}.glitch.me`
   : 'http://localhost:5174';
 
 const app = express();
@@ -19,29 +18,18 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        // MODIFICATION POUR RENDER :
-        origin: [
-            "https://projet-react-frontend.onrender.com",
-            "http://localhost:5174",
-            "https://projet-react-frontend.onrender.com:3000",
-            "http://localhost:3000"
-        ],
+        // MODIFICATION POUR GLITCH :
+        origin: "*",  // Glitch gère le CORS
         methods: ["GET", "POST"],
         credentials: true
     },
-    transports: ['websocket', 'polling'],
-    // Important pour Render
-    pingTimeout: 60000,
-    pingInterval: 25000
+    transports: ['websocket', 'polling']
 });
 
 // Middleware
 app.use(cors({
-    // MODIFICATION POUR RENDER :
-    origin: [
-        "https://projet-react-frontend.onrender.com",
-        "http://localhost:5174"
-    ],
+    // MODIFICATION POUR GLITCH :
+    origin: "*",  // Glitch gère le CORS
     credentials: true
 }));
 app.use(express.json());
@@ -282,15 +270,15 @@ app.post('/api/notifications', (req, res) => {
 // DÉMARRAGE DU SERVEUR
 // ================================
 
-// Pour Render
+// Pour Glitch, démarrez normalement
 httpServer.listen(PORT, '0.0.0.0', () => {
     console.log('=========================================');
-    console.log(`🚀  SERVEUR BACKEND DÉMARRÉ SUR RENDER`);
+    console.log(`🚀  SERVEUR BACKEND DÉMARRÉ SUR GLITCH`);
     console.log('=========================================');
-    console.log(`📡  Port: ${PORT}`);
-    console.log(`🔌  WebSocket: wss://projet-react-api.onrender.com`);
-    console.log(`🌐  Client URL: ${CLIENT_URL}`);
-    console.log(`🌍  External URL: ${process.env.RENDER_EXTERNAL_URL || 'localhost'}`);
+    console.log(`📡  API REST:    https://${process.env.PROJECT_DOMAIN || 'localhost'}.glitch.me`);
+    console.log(`🔌  WebSocket:   wss://${process.env.PROJECT_DOMAIN || 'localhost'}.glitch.me`);
+    console.log(`🌐  Mode: ${isProduction ? 'Production' : 'Développement'}`);
+    console.log(`🔗  Client URL: ${CLIENT_URL}`);
     console.log('');
     console.log('📊  Données initiales:');
     console.log(`   - ${students.length} étudiants`);
